@@ -522,7 +522,7 @@
          ==================== -->
     <div id="section-home" class="section">
         <div class="container">
-            <img src="assets/one.png" alt="Cute Panda" class="center-img"
+            <img src="images/one.png" alt="Cute Panda" class="center-img"
                 style="width: 400px; height: auto; border-radius: 20px; border: 4px solid white; box-shadow: 0 0 15px rgba(255,255,255,0.5);">
             <h1>A Ma'am saab was born today,<br>17 years ago!</h1>
             <p>Yep, it's YOU! A little surprise for you awaits heheheheh...</p>
@@ -540,7 +540,7 @@
 
             <div class="cake-wrapper" id="cakeWrapper">
                 <!-- Cake Image -->
-                <img src="assets/cake.png" alt="Birthday Cake" id="cakeImg">
+                <img src="images/cake.png" alt="Birthday Cake" id="cakeImg">
 
                 <!-- Candle Zone (Just Flame) -->
                 <div class="candle-zone" id="candleZone">
@@ -610,7 +610,7 @@
             <div class="scene">
                 <div class="card" id="theCard" onclick="this.classList.toggle('is-open')">
                     <div class="card-face card-front">
-                        <img src="assets/cover.png" alt="Card Cover">
+                        <img src="images/cover.png" alt="Card Cover">
                     </div>
                     <div class="card-face card-back">
                         <h3>Happy Birthday!</h3>
@@ -638,7 +638,7 @@
         /* ====================
            AUDIO MANAGER
            ==================== */
-        const bgMusic = new Audio('assets/bg2.m4a');
+        const bgMusic = new Audio('audio/bg2.mp3');
         bgMusic.loop = true;
         bgMusic.volume = 0.1;
 
@@ -650,7 +650,7 @@
         }, { once: true });
 
         function playSound(name, volume = 1.0) {
-            const sfx = new Audio(`assets/${name}`);
+            const sfx = new Audio(`audio/${name}`);
             sfx.volume = volume;
             sfx.play().catch(e => console.log("Sound play error", e));
         }
@@ -714,7 +714,7 @@
             } else if (cakeStep === 1) {
                 // Decorate
                 triggerCakeConfetti();
-                playSound('partypopper.m4a', 0.09);
+                playSound('partypopper.mp3', 0.09);
                 cakeBtn.innerText = "🔥 Light the Candle";
                 cakeSubtext.innerText = "Time to light it up!";
                 cakeStep++;
@@ -859,5 +859,6 @@
 
     </script>
 </body>
+
 
 </html>
