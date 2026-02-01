@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Fatima!</title>
+    <style>
+        /* ====================
+           GLOBAL STYLES (from style.css)
+           ==================== */
+        :root {
+            --bg-color: #0d0d15;
+            --primary-color: #ff6b95;
+            --secondary-color: #9b5cf6;
+            --accent-color: #2dd4bf;
+            --text-color: #fff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Pacifico&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Fredoka One', cursive;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(255, 107, 149, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(45, 212, 191, 0.1) 0%, transparent 40%);
+        }
+
+        /* Animations */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 107, 149, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 107, 149, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 107, 149, 0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h4 {
+            font-family: 'Pacifico', cursive;
+            font-size: clamp(0.8rem, 2vw, 1.2rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            max-width: 80%;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-family: 'Fredoka One', cursive;
+            color: white;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 107, 149, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Images */
+        .center-img {
+            max-width: 80vw;
+            max-height: 40vh;
+            object-fit: contain;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Sections Logic */
+        .section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            /* Default flex, hidden overrides this */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            /* Stack them */
+            top: 0;
+            left: 0;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        .section.hidden {
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            color: var(--primary-color);
+            font-size: 20px;
+            opacity: 0.6;
+            animation: floatUp 5s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes floatUp {
+            from {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0.8;
+            }
+
+            to {
+                transform: translateY(-10vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ====================
+           CAKE STYLES
+           ==================== */
+        .cake-wrapper {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 30vh;
+            flex: 1;
+        }
+
+        #cakeImg {
+            max-width: 90%;
+            max-height: 40vh;
+            width: auto;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #cakeImg.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .candle-zone {
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .candle-zone.visible {
+            opacity: 1;
+        }
+
+        .flame {
+            position: absolute;
+            top: 14px;
+            width: 20px;
+            height: 30px;
+            background: linear-gradient(-45deg, red, orange, yellow);
+            border-radius: 50% 50% 20% 20%;
+            filter: blur(4px);
+            animation: burn 0.5s infinite alternate;
+            z-index: 40;
+            box-shadow: 0 0 20px 5px rgba(255, 165, 0, 0.6);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .flame.burn {
+            opacity: 1;
+        }
+
+        .flame.off {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        @keyframes burn {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        .action-area {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .action-area h1 {
+            transition: margin-top 0.5s;
+        }
+
+        /* ====================
+           BALLOONS STYLES
+           ==================== */
+        .balloon-wrapper {
+            position: relative;
+            height: 60vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            margin-bottom: 50px;
+        }
+
+        .balloon-bouquet {
+            position: relative;
+            width: 500px;
+            height: 400px;
+            bottom: 15vh;
+        }
+
+        .balloon-item {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .pos-1 {
+            left: -3%;
+            top: 40%;
+            transform: rotate(-15deg);
+        }
+
+        .pos-2 {
+            left: 128px;
+            top: 28%;
+            transform: rotate(-5deg);
+        }
+
+        .pos-3 {
+            right: 129px;
+            top: 28%;
+            transform: rotate(5deg);
+        }
+
+        .pos-4 {
+            right: -19px;
+            top: 40%;
+            transform: rotate(17deg);
+        }
+
+        .balloon {
+            width: 90px;
+            height: 110px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 10;
+            box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.1), 5px 10px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hidden-text {
+            position: absolute;
+            top: -4px;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.7rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 2px white;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px);
+            white-space: nowrap;
+            z-index: 5;
+            width: 150px;
+            text-align: center;
+        }
+
+        .hidden-text.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .b1 {
+            background: radial-gradient(circle at 30% 30%, #ff9a9e, #ff6b95);
+        }
+
+        .b2 {
+            background: radial-gradient(circle at 30% 30%, #a18cd1, #9b5cf6);
+        }
+
+        .b3 {
+            background: radial-gradient(circle at 30% 30%, #84fab0, #2dd4bf);
+        }
+
+        .b4 {
+            background: radial-gradient(circle at 30% 30%, #fccb90, #ff9f43);
+        }
+
+        .balloon:hover {
+            transform: scale(1.05);
+        }
+
+        .balloon.popped {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .strings-container {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 400px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .string {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.748);
+            stroke-width: 1.5;
+            transition: opacity 0.5s ease;
+        }
+
+        #nextBtnContainer {
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-align: center;
+            margin-top: -50px;
+            position: relative;
+            z-index: 20;
+        }
+
+        /* ====================
+           CARD STYLES
+           ==================== */
+        .scene {
+            width: 300px;
+            height: 420px;
+            perspective: 600px;
+            margin: 2rem 0;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            cursor: pointer;
+        }
+
+        .card.is-open {
+            transform: rotateY(-180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background-color: #fff;
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-back {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+            padding: 20px;
+            flex-direction: column;
+            text-align: center;
+            background-image: linear-gradient(#ffffff 2rem, #f0f0f0 2rem);
+            background-size: 100% 2.1rem;
+            line-height: 2.1rem;
+            border: 10px solid #f8e1e7;
+        }
+
+        .card-back h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        .handwritten-text {
+            font-family: 'Fredoka One', cursive;
+            /* Fallback used in original */
+            font-weight: normal;
+            font-size: 1.1rem;
+            color: #555;
+            text-align: center;
+        }
+
+        .hint {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ====================
+         SECTION: HOME
+         ==================== -->
+    <div id="section-home" class="section">
+        <div class="container">
+            <img src="assets/one.png" alt="Cute Panda" class="center-img"
+                style="width: 400px; height: auto; border-radius: 20px; border: 4px solid white; box-shadow: 0 0 15px rgba(255,255,255,0.5);">
+            <h1>A Ma'am saab was born today,<br>17 years ago!</h1>
+            <p>Yep, it's YOU! A little surprise for you awaits heheheheh...</p>
+            <button class="btn" onclick="showSection('section-cake')">🎁 Start the Surprise</button>
+        </div>
+    </div>
+
+    <!-- ====================
+         SECTION: CAKE
+         ==================== -->
+    <div id="section-cake" class="section hidden">
+        <div class="container">
+            <h1>Happy Birthday<br>Maam sab!</h1>
+            <h4 id="subtext">Let's get this party started!</h4>
+
+            <div class="cake-wrapper" id="cakeWrapper">
+                <!-- Cake Image -->
+                <img src="assets/cake.png" alt="Birthday Cake" id="cakeImg">
+
+                <!-- Candle Zone (Just Flame) -->
+                <div class="candle-zone" id="candleZone">
+                    <div class="flame" id="flame"></div>
+                </div>
+            </div>
+
+            <div class="action-area">
+                <button id="actionBtn" class="btn" onclick="handleCakeAction()">🎂 Place Cake</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================
+         SECTION: BALLOONS
+         ==================== -->
+    <div id="section-balloons" class="section hidden">
+        <div class="container">
+            <h1 id="loonInstruction">Pop all 4 balloons</h1>
+
+            <div class="balloon-wrapper">
+                <!-- SVG Strings connecting balloons to a point -->
+                <svg class="strings-container" viewBox="0 0 500 400">
+                    <path id="str1" d="M45,170 Q125,300 250,400" class="string" />
+                    <path id="str2" d="M180,120 Q215,300 250,400" class="string" />
+                    <path id="str3" d="M320,120 Q285,300 250,400" class="string" />
+                    <path id="str4" d="M455,170 Q375,300 250,400" class="string" />
+                </svg>
+
+                <div class="balloon-bouquet" id="bouquet">
+                    <!-- Balloon 1 -->
+                    <div class="balloon-item pos-1">
+                        <div class="hidden-text" id="text1" style="transform: rotate(-10deg);">You</div>
+                        <div class="balloon b1" onclick="popCX(event, this, 'text1', 'str1')"></div>
+                    </div>
+                    <!-- Balloon 2 -->
+                    <div class="balloon-item pos-2">
+                        <div class="hidden-text" id="text2" style="transform: rotate(-5deg);">Like</div>
+                        <div class="balloon b2" onclick="popCX(event, this, 'text2', 'str2')"></div>
+                    </div>
+                    <!-- Balloon 3 -->
+                    <div class="balloon-item pos-3">
+                        <div class="hidden-text" id="text3" style="transform: rotate(5deg);">ME</div>
+                        <div class="balloon b3" onclick="popCX(event, this, 'text3', 'str3')"></div>
+                    </div>
+                    <!-- Balloon 4 -->
+                    <div class="balloon-item pos-4">
+                        <div class="hidden-text" id="text4" style="transform: rotate(10deg);">Right?👻</div>
+                        <div class="balloon b4" onclick="popCX(event, this, 'text4', 'str4')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nextBtnContainer">
+                <button class="btn" onclick="showSection('section-card')">Next ➜</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================
+         SECTION: CARD
+         ==================== -->
+    <div id="section-card" class="section hidden">
+        <div class="container">
+            <h1>My Special Message to YOU</h1>
+
+            <div class="scene">
+                <div class="card" id="theCard" onclick="this.classList.toggle('is-open')">
+                    <div class="card-face card-front">
+                        <img src="assets/cover.png" alt="Card Cover">
+                    </div>
+                    <div class="card-face card-back">
+                        <h3>Happy Birthday!</h3>
+                        <p class="handwritten-text">
+                            Wishing you a Year filled with love, laughter, and all your favorite things(Me😜)!
+                            <br>
+                            You make the world brighter just by being in it.
+                            <br>
+                            Love from MuKa the Gr8,<br>Yours Obediently,<br>x.y.z 😂😂❤️
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="hint">Tap the card (Your image lol)</p>
+
+            <button class="btn"
+                style="margin-top: 20px; font-size: 1rem; padding: 10px 20px; background: transparent; border: 1px solid white;"
+                onclick="resetAndReplay()">Replay Surprise ↺</button>
+        </div>
+    </div>
+
+
+    <script>
+        /* ====================
+           AUDIO MANAGER
+           ==================== */
+        const bgMusic = new Audio('assets/bg2.m4a');
+        bgMusic.loop = true;
+        bgMusic.volume = 0.1;
+
+        // Try autoplay
+        document.body.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log("Audio play failed", e));
+            }
+        }, { once: true });
+
+        function playSound(name, volume = 1.0) {
+            const sfx = new Audio(`assets/${name}`);
+            sfx.volume = volume;
+            sfx.play().catch(e => console.log("Sound play error", e));
+        }
+
+        /* ====================
+           NAVIGATION & HELPERS
+           ==================== */
+        function showSection(id) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.add('hidden');
+                // Optional: remove visible class if we were using it, but we rely on 'hidden' for logic
+                sec.style.display = 'none'; // Ensure it's gone from flow
+            });
+
+            // Show target
+            const target = document.getElementById(id);
+            if (target) {
+                target.classList.remove('hidden');
+                target.style.display = 'flex'; // Restore flex
+            }
+        }
+
+        function createGlobalParticle(content, className, durationMin, durationAdd, sizeMin, sizeAdd, color) {
+            const el = document.createElement('div');
+            el.classList.add(className);
+            el.innerHTML = content;
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.animationDuration = Math.random() * durationMin + durationAdd + 's';
+            el.style.fontSize = Math.random() * sizeMin + sizeAdd + 'px';
+            if (color) el.style.color = color;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 10000);
+        }
+
+        /* ====================
+           HOME LOGIC
+           ==================== */
+        // Floating Cake Slices
+        setInterval(() => {
+            // Only if home is visible? Or always? Let's do always for "atmosphere" or check visibility
+            if (!document.getElementById('section-home').classList.contains('hidden')) {
+                createGlobalParticle('🍰', 'particle', 3, 7, 20, 20, null);
+            }
+        }, 400);
+
+        /* ====================
+           CAKE LOGIC
+           ==================== */
+        let cakeStep = 0;
+        const cakeBtn = document.getElementById('actionBtn');
+        const cakeSubtext = document.getElementById('subtext');
+
+        function handleCakeAction() {
+            if (cakeStep === 0) {
+                // Place Cake
+                document.getElementById('cakeImg').classList.add('visible');
+                cakeBtn.innerText = "🎉 Add Party Decorations";
+                cakeSubtext.innerText = "Needs some celebration vibes!";
+                cakeStep++;
+            } else if (cakeStep === 1) {
+                // Decorate
+                triggerCakeConfetti();
+                playSound('partypopper.m4a', 0.09);
+                cakeBtn.innerText = "🔥 Light the Candle";
+                cakeSubtext.innerText = "Time to light it up!";
+                cakeStep++;
+            } else if (cakeStep === 2) {
+                // Light
+                document.getElementById('candleZone').classList.add('visible');
+                document.getElementById('flame').classList.add('burn');
+                playSound('candle lit.mp3', 0.09);
+                cakeBtn.innerText = "💨 Blow the Candle";
+                cakeSubtext.innerText = "Make a wish!";
+                cakeStep++;
+            } else if (cakeStep === 3) {
+                // Blow
+                document.getElementById('flame').classList.remove('burn');
+                document.getElementById('flame').classList.add('off');
+                playSound('blow.mp3', 0.09);
+                cakeBtn.innerText = "🎈 Pop the Balloons";
+                cakeSubtext.innerText = "YAY! Wishing you a Happy New Year lol!";
+                cakeStep++;
+            } else if (cakeStep === 4) {
+                showSection('section-balloons');
+            }
+        }
+
+        function triggerCakeConfetti() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            createSpecificBurst(w * 0.2, h * 0.4, 50);
+            createSpecificBurst(w * 0.8, h * 0.4, 50);
+            createSpecificBurst(w * 0.5, h * 0.3, 50);
+        }
+
+        // Floating Sparkles for Cake Page
+        setInterval(() => {
+            if (!document.getElementById('section-cake').classList.contains('hidden')) {
+                createGlobalParticle('✨', 'particle', 3, 7, 15, 10, 'gold');
+            }
+        }, 500);
+
+        /* ====================
+           BALLOONS LOGIC
+           ==================== */
+        let poppedCount = 0;
+        const totalBalloons = 4;
+
+        function popCX(event, element, textId, stringId) {
+            if (element.classList.contains('popped')) return;
+
+            createSpecificBurst(event.clientX, event.clientY, 30);
+            playSound('balloon pop.mp3', 0.05);
+
+            element.classList.add('popped');
+            if (stringId) {
+                const str = document.getElementById(stringId);
+                if (str) str.style.opacity = '0';
+            }
+
+            const textEl = document.getElementById(textId);
+            textEl.classList.add('visible');
+
+            poppedCount++;
+
+            if (poppedCount === totalBalloons) {
+                setTimeout(() => {
+                    document.getElementById('nextBtnContainer').style.opacity = '1';
+                    document.getElementById('loonInstruction').innerText = "Yippee! Thanks for saying YES! (hopefully)";
+                }, 800);
+            }
+        }
+
+        // Background Stars for Balloons
+        setInterval(() => {
+            if (!document.getElementById('section-balloons').classList.contains('hidden')) {
+                createGlobalParticle('★', 'particle', 3, 7, 15, 10, '#fff');
+            }
+        }, 300);
+
+        /* ====================
+           SHARED HELPERS
+           ==================== */
+        function createSpecificBurst(x, y, particleCount) {
+            const colors = ['#FFC107', '#FF5722', '#E91E63', '#9C27B0', '#2196F3', '#00BCD4'];
+            for (let i = 0; i < particleCount; i++) {
+                const p = document.createElement('div');
+                p.style.position = 'fixed';
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.width = (Math.random() * 8 + 4) + 'px';
+                p.style.height = (Math.random() * 8 + 4) + 'px';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.borderRadius = '50%';
+                p.style.pointerEvents = 'none';
+                p.style.zIndex = '1000';
+                document.body.appendChild(p);
+
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 150 + 50;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                const gravity = 200; // Gravity effect
+
+                p.animate([
+                    { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty + gravity}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 1000 + Math.random() * 500,
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+                    fill: 'forwards'
+                }).onfinish = () => p.remove();
+            }
+        }
+
+        /* ====================
+           RESET / REPLAY
+           ==================== */
+        function resetAndReplay() {
+            // 1. Reset Cake
+            cakeStep = 0;
+            document.getElementById('cakeImg').classList.remove('visible');
+            document.getElementById('candleZone').classList.remove('visible');
+            document.getElementById('flame').classList.remove('burn', 'off');
+            cakeBtn.innerText = "🎂 Place Cake";
+            cakeSubtext.innerText = "Let's get this party started!";
+
+            // 2. Reset Balloons
+            poppedCount = 0;
+            document.querySelectorAll('.balloon').forEach(b => b.classList.remove('popped'));
+            document.querySelectorAll('.string').forEach(s => s.style.opacity = '1');
+            document.querySelectorAll('.hidden-text').forEach(t => t.classList.remove('visible'));
+            document.getElementById('nextBtnContainer').style.opacity = '0';
+            document.getElementById('loonInstruction').innerText = "Pop all 4 balloons";
+
+            // 3. Reset Card
+            document.getElementById('theCard').classList.remove('is-open');
+
+            // 4. Go Home
+            showSection('section-home');
+        }
+
+        // Initialize: Ensure Home is visible, others hidden
+        showSection('section-home');
+
+    </script>
+</body>
+
+</html>
